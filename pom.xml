@@ -13,8 +13,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.tools</groupId>
-			<artifactId>bonita-shell-base</artifactId>
-			<version>${project.version}</version>
+			<artifactId>shell-base</artifactId>
+			<version>1.0</version>
 		</dependency>
 			<dependency>
 				<groupId>junit</groupId>
