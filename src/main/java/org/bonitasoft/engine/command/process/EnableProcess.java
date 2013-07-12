@@ -16,33 +16,30 @@ package org.bonitasoft.engine.command.process;
 import java.util.List;
 
 import org.bonitasoft.engine.BonitaShellContext;
-import org.bonitasoft.engine.bpm.process.ProcessInstance;
 import org.bonitasoft.engine.exception.BonitaException;
 
 /**
  * @author Baptiste Mesta
  */
-public class StartProcessCommand extends ProcessCommand {
+public class EnableProcess extends ProcessCommand {
 
     @Override
     protected void executeTenantBusiness(final List<String> args, final BonitaShellContext context) throws BonitaException {
-        ProcessInstance startProcess;
         if (args.size() == 1) {
-            startProcess = getProcessAPI().startProcess(Long.parseLong(args.get(0)));
+            getProcessAPI().enableProcess(Long.parseLong(args.get(0)));
         } else {
-            startProcess = getProcessAPI().startProcess(getProcessAPI().getProcessDefinitionId(args.get(0), args.get(1)));
+            getProcessAPI().enableProcess(getProcessAPI().getProcessDefinitionId(args.get(0), args.get(1)));
         }
-        System.out.println("Started process instance with id=" + startProcess.getId());
     }
 
     @Override
     public String getName() {
-        return "start";
+        return "enable";
     }
 
     @Override
     public void printHelp() {
-        System.out.println("Usage: start <processID>|<process name> <process version>");
+        System.out.println("Usage: enable <processID>|<process name> <process version>");
     }
 
     @Override

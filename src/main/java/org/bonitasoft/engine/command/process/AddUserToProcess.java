@@ -16,46 +16,34 @@ package org.bonitasoft.engine.command.process;
 import java.util.List;
 
 import org.bonitasoft.engine.BonitaShellContext;
-import org.bonitasoft.engine.bpm.process.ProcessInstance;
+import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.exception.BonitaException;
+import org.bonitasoft.engine.identity.User;
 
 /**
  * @author Baptiste Mesta
  */
-public class StartProcessCommand extends ProcessCommand {
+public class AddUserToProcess extends ProcessCommand {
 
     @Override
     protected void executeTenantBusiness(final List<String> args, final BonitaShellContext context) throws BonitaException {
-        ProcessInstance startProcess;
-        if (args.size() == 1) {
-            startProcess = getProcessAPI().startProcess(Long.parseLong(args.get(0)));
-        } else {
-            startProcess = getProcessAPI().startProcess(getProcessAPI().getProcessDefinitionId(args.get(0), args.get(1)));
-        }
-        System.out.println("Started process instance with id=" + startProcess.getId());
+        ProcessDefinition processDefinition = getProcessAPI().getProcessDefinition(getProcessAPI().getProcessDefinitionId(args.get(0), args.get(1)));
+        User user = context.getIdentityAPI().getUserByUserName(args.get(2));
+        getProcessAPI().addUserToActor(args.get(3), processDefinition, user.getId());
     }
 
     @Override
     public String getName() {
-        return "start";
+        return "add-user-to-actor";
     }
 
     @Override
     public void printHelp() {
-        System.out.println("Usage: start <processID>|<process name> <process version>");
+        System.out.println("Usage: enable <process name> <process version> <actor name> <user name>");
     }
 
     @Override
     public boolean validate(final List<String> args) {
-        if (args.size() == 0) {
-            return false;
-        }
-        boolean args0IsNumber = false;
-        try {
-            Long.parseLong(args.get(0));
-            args0IsNumber = true;
-        } catch (final NumberFormatException e) {
-        }
-        return args.size() == 1 && args0IsNumber || args.size() == 2;
+        return args.size() == 4;
     }
 }

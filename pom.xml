@@ -9,12 +9,12 @@
 		<dependency>
 			<groupId>org.bonitasoft.engine</groupId>
 			<artifactId>bonita-client</artifactId>
-			<version>${project.version}</version>
+			<version>6.1.0-rc-04</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bonitasoft.tools</groupId>
 			<artifactId>shell-base</artifactId>
-			<version>1.0</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 			<dependency>
 				<groupId>junit</groupId>

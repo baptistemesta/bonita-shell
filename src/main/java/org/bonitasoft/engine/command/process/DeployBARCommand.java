@@ -26,7 +26,6 @@ import org.bonitasoft.engine.bpm.bar.BusinessArchiveFactory;
 import org.bonitasoft.engine.bpm.bar.InvalidBusinessArchiveFormatException;
 import org.bonitasoft.engine.bpm.process.ProcessDefinition;
 import org.bonitasoft.engine.exception.BonitaException;
-
 /**
  * @author Baptiste Mesta
  */

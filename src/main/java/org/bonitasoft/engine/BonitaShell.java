@@ -10,7 +10,9 @@ import org.bonitasoft.engine.command.identity.CreateGroupCommand;
 import org.bonitasoft.engine.command.identity.CreateRoleCommand;
 import org.bonitasoft.engine.command.identity.CreateUserCommand;
 import org.bonitasoft.engine.command.identity.ListUserCommand;
+import org.bonitasoft.engine.command.process.AddUserToProcess;
 import org.bonitasoft.engine.command.process.DeployBARCommand;
+import org.bonitasoft.engine.command.process.EnableProcess;
 import org.bonitasoft.engine.command.process.ListProcessDefinitions;
 import org.bonitasoft.engine.command.process.StartProcessCommand;
 
@@ -39,6 +41,7 @@ public class BonitaShell extends BaseShell<BonitaShellContext> {
     protected List<ShellCommand<BonitaShellContext>> initShellCommands() throws Exception {
         return Arrays.asList(createCommand(LoginCommand.class), createCommand(LogoutCommand.class), createCommand(CreateGroupCommand.class),
                 createCommand(CreateUserCommand.class), createCommand(CreateRoleCommand.class), createCommand(ListUserCommand.class),
-                createCommand(DeployBARCommand.class), createCommand(ListProcessDefinitions.class), createCommand(StartProcessCommand.class));
+                createCommand(DeployBARCommand.class), createCommand(ListProcessDefinitions.class), createCommand(StartProcessCommand.class),
+                createCommand(EnableProcess.class), createCommand(AddUserToProcess.class));
     }
 }
