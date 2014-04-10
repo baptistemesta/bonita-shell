@@ -14,9 +14,10 @@
 package org.bonitasoft.engine.command;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bonitasoft.engine.BonitaShellContext;
-import org.bonitasoft.engine.exception.BonitaException;
 
 /**
  * @author Baptiste Mesta
@@ -25,7 +26,9 @@ public abstract class BonitaCommand extends ShellCommand<BonitaShellContext> {
 
     public static int BATCH_SIZE = 20;
 
-    protected abstract void executeBusiness(List<String> args, BonitaShellContext context) throws BonitaException;
+    private static Logger logger = Logger.getLogger(BonitaCommand.class.getName());
+
+    protected abstract void executeBusiness(List<String> args, BonitaShellContext context) throws Exception;
 
     @Override
     public boolean execute(final List<String> args, final BonitaShellContext context) throws Exception {
@@ -33,7 +36,7 @@ public abstract class BonitaCommand extends ShellCommand<BonitaShellContext> {
             try {
                 executeBusiness(args, context);
             } catch (final Exception e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Error executing the command", e);
                 return false;
             }
         } else {

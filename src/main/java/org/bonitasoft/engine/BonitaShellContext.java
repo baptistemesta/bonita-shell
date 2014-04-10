@@ -56,7 +56,10 @@ public class BonitaShellContext implements ShellContext {
 
     public ProcessAPI getProcessAPI() throws BonitaException {
         return TenantAPIAccessor.getProcessAPI(session);
+    }
 
+    public APISession getSession() {
+        return session;
     }
 
 }

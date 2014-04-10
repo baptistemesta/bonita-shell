@@ -13,30 +13,39 @@
  **/
 package org.bonitasoft.engine.command.identity;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.bonitasoft.engine.BonitaShellContext;
-import org.bonitasoft.engine.api.IdentityAPI;
-import org.bonitasoft.engine.command.BonitaCommand;
+import org.bonitasoft.engine.exception.BonitaException;
 
 /**
  * @author Baptiste Mesta
  */
-public abstract class IdentityCommand extends BonitaCommand {
-
-    private IdentityAPI identityApi;
+public class DeployOrganisationCommand extends IdentityCommand {
 
     @Override
-    protected final void executeBusiness(final List<String> args, final BonitaShellContext context) throws Exception {
-        identityApi = context.getIdentityAPI();
-        executeTenantBusiness(args, context);
-        identityApi = null;
+    protected void executeTenantBusiness(final List<String> args, final BonitaShellContext context) throws BonitaException, IOException {
+        String orga = FileUtils.readFileToString(new File(args.get(0)));
+        getIdentityApi().importOrganization(orga);
+        System.out.println("organization imported");
     }
 
-    public IdentityAPI getIdentityApi() {
-        return identityApi;
+    @Override
+    public String getName() {
+        return "deploy-orga";
     }
 
-    protected abstract void executeTenantBusiness(List<String> args, BonitaShellContext context) throws Exception;
+    @Override
+    public void printHelp() {
+        System.out.println("Usage: deploy-orga <path to orga xml file>");
+    }
+
+    @Override
+    public boolean validate(final List<String> args) {
+        return args.size() == 1;
+    }
 
 }
