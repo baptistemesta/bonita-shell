@@ -1,21 +1,15 @@
 package org.bonitasoft.engine;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.bonitasoft.engine.command.LoginCommand;
-import org.bonitasoft.engine.command.LogoutCommand;
-import org.bonitasoft.engine.command.ShellCommand;
-import org.bonitasoft.engine.command.identity.CreateGroupCommand;
-import org.bonitasoft.engine.command.identity.CreateRoleCommand;
-import org.bonitasoft.engine.command.identity.CreateUserCommand;
-import org.bonitasoft.engine.command.identity.DeployOrganisationCommand;
-import org.bonitasoft.engine.command.identity.ListUserCommand;
-import org.bonitasoft.engine.command.process.AddUserToProcess;
-import org.bonitasoft.engine.command.process.DeployBARCommand;
-import org.bonitasoft.engine.command.process.EnableProcess;
-import org.bonitasoft.engine.command.process.ListProcessDefinitions;
-import org.bonitasoft.engine.command.process.StartProcessCommand;
+import org.bonitasoft.engine.api.IdentityAPI;
+import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.shell.BaseShell;
+import org.bonitasoft.shell.command.LoginCommand;
+import org.bonitasoft.shell.command.LogoutCommand;
+import org.bonitasoft.shell.command.ReflectCommand;
+import org.bonitasoft.shell.command.ShellCommand;
 
 public class BonitaShell extends BaseShell<BonitaShellContext> {
 
@@ -34,16 +28,19 @@ public class BonitaShell extends BaseShell<BonitaShellContext> {
         return BonitaShellContext.getInstance();
     }
 
-    private ShellCommand<BonitaShellContext> createCommand(final Class<?> clazz) throws InstantiationException, IllegalAccessException {
-        return (ShellCommand<BonitaShellContext>) clazz.newInstance();
-    }
-
     @Override
     protected List<ShellCommand<BonitaShellContext>> initShellCommands() throws Exception {
-        return Arrays.asList(createCommand(LoginCommand.class), createCommand(LogoutCommand.class), createCommand(DeployOrganisationCommand.class),
-                createCommand(CreateGroupCommand.class),
-                createCommand(CreateUserCommand.class), createCommand(CreateRoleCommand.class), createCommand(ListUserCommand.class),
-                createCommand(DeployBARCommand.class), createCommand(ListProcessDefinitions.class), createCommand(StartProcessCommand.class),
-                createCommand(EnableProcess.class), createCommand(AddUserToProcess.class));
+        ArrayList<ShellCommand<BonitaShellContext>> commands = new ArrayList<ShellCommand<BonitaShellContext>>(4);
+        commands.add(new LoginCommand<BonitaShellContext>());
+        commands.add(new LogoutCommand<BonitaShellContext>());
+        commands.add(new ReflectCommand<BonitaShellContext>("process", ProcessAPI.class));
+        commands.add(new ReflectCommand<BonitaShellContext>("identity", IdentityAPI.class));
+        return commands;
+        // return Arrays.asList(createCommand(LoginCommand.class), createCommand(LogoutCommand.class), createCommand(DeployOrganisationCommand.class),
+        // createCommand(CreateGroupCommand.class),
+        // createCommand(CreateUserCommand.class), createCommand(CreateRoleCommand.class), createCommand(ListUserCommand.class),
+        // createCommand(DeployBARCommand.class), createCommand(ListProcessDefinitions.class), createCommand(StartProcessCommand.class),
+        // createCommand(EnableProcess.class), createCommand(AddUserToProcess.class));
     }
+
 }

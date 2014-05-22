@@ -6,6 +6,7 @@ import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
+import org.bonitasoft.shell.ShellContext;
 
 public class BonitaShellContext implements ShellContext {
 
@@ -29,11 +30,13 @@ public class BonitaShellContext implements ShellContext {
     /**
      * @return
      */
+    @Override
     public boolean isLogged() {
         return session != null;
     }
 
-    public void logout() throws BonitaException {
+    @Override
+    public void logout() throws Exception {
         loginAPI.logout(session);
         loginAPI = null;
         session = null;
@@ -44,7 +47,8 @@ public class BonitaShellContext implements ShellContext {
      * @param username
      * @param password
      */
-    public void login(final String username, final String password) throws BonitaException {
+    @Override
+    public void login(final String username, final String password) throws Exception {
         loginAPI = TenantAPIAccessor.getLoginAPI();
         session = loginAPI.login(username, password);
     }
@@ -60,6 +64,17 @@ public class BonitaShellContext implements ShellContext {
 
     public APISession getSession() {
         return session;
+    }
+
+    @Override
+    public Object getApi(final String apiName) throws Exception {
+        if (apiName.equals("process")) {
+            return getProcessAPI();
+        }
+        if (apiName.equals("identity")) {
+            return getIdentityAPI();
+        }
+        throw new IllegalArgumentException("Unknown API: " + apiName);
     }
 
 }

@@ -3,13 +3,12 @@ package org.bonitasoft.engine.command.identity;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+import org.bonitasoft.engine.api.IdentityAPI;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.bonitasoft.engine.api.IdentityAPI;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DeployOrganisationCommandTest {

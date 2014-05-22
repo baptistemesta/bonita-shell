@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 
 import org.bonitasoft.engine.BonitaShellContext;
+import org.bonitasoft.shell.command.LoginCommand;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

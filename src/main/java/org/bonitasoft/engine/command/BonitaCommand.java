@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bonitasoft.engine.BonitaShellContext;
+import org.bonitasoft.shell.command.ShellCommand;
 
 /**
  * @author Baptiste Mesta
