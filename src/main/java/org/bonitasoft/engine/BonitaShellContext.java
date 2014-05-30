@@ -3,6 +3,7 @@ package org.bonitasoft.engine;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.LoginAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.engine.api.TenantAPIAccessor;
 import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.APISession;
@@ -61,6 +62,10 @@ public class BonitaShellContext implements ShellContext {
     public ProcessAPI getProcessAPI() throws BonitaException {
         return TenantAPIAccessor.getProcessAPI(session);
     }
+    
+    public ProfileAPI getProfileAPI() throws BonitaException {
+    	return TenantAPIAccessor.getProfileAPI(session);
+    }
 
     public APISession getSession() {
         return session;
@@ -73,6 +78,9 @@ public class BonitaShellContext implements ShellContext {
         }
         if (apiName.equals("identity")) {
             return getIdentityAPI();
+        }
+        if (apiName.equals("profile")) {
+        	return getProfileAPI();
         }
         throw new IllegalArgumentException("Unknown API: " + apiName);
     }
