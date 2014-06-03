@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
+import org.bonitasoft.engine.api.ProfileAPI;
 import org.bonitasoft.shell.BaseShell;
 import org.bonitasoft.shell.command.LoginCommand;
 import org.bonitasoft.shell.command.LogoutCommand;
@@ -35,6 +36,7 @@ public class BonitaShell extends BaseShell<BonitaShellContext> {
         commands.add(new LogoutCommand<BonitaShellContext>());
         commands.add(new ReflectCommand<BonitaShellContext>("process", ProcessAPI.class));
         commands.add(new ReflectCommand<BonitaShellContext>("identity", IdentityAPI.class));
+        commands.add(new ReflectCommand<BonitaShellContext>("profile", ProfileAPI.class));
         return commands;
         // return Arrays.asList(createCommand(LoginCommand.class), createCommand(LogoutCommand.class), createCommand(DeployOrganisationCommand.class),
         // createCommand(CreateGroupCommand.class),
