@@ -1,11 +1,14 @@
 package org.bonitasoft.engine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.bonitasoft.engine.api.ApiAccessType;
 import org.bonitasoft.engine.api.IdentityAPI;
 import org.bonitasoft.engine.api.ProcessAPI;
 import org.bonitasoft.engine.api.ProfileAPI;
+import org.bonitasoft.engine.util.APITypeManager;
 import org.bonitasoft.shell.BaseShell;
 import org.bonitasoft.shell.command.LoginCommand;
 import org.bonitasoft.shell.command.LogoutCommand;
@@ -45,4 +48,15 @@ public class BonitaShell extends BaseShell<BonitaShellContext> {
         // createCommand(EnableProcess.class), createCommand(AddUserToProcess.class));
     }
 
+    @Override
+    public void init() throws Exception {
+        super.init();
+
+
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put("application.name","bonita");
+        parameters.put("server.url","http://localhost:8080");
+        parameters.put("org.bonitasoft.engine.api-type.parameters","server.url,application.name");
+        APITypeManager.setAPITypeAndParams(ApiAccessType.HTTP, parameters);
+    }
 }
